@@ -42,6 +42,35 @@
 
             return truePositives + falseNegatives == 0 ? 0 : (double)truePositives / (truePositives + falseNegatives);
         }
+
+        // Overload for multi-class classification
+        public double Compute(int[] trueLabels, int[] predictedLabels, int targetLabel)
+        {
+            if (trueLabels.Length != predictedLabels.Length)
+            {
+                throw new ArgumentException("The length of trueLabels and predictedLabels arrays must be the same.");
+            }
+
+            int truePositives = 0;
+            int falseNegatives = 0;
+
+            for (int i = 0; i < trueLabels.Length; i++)
+            {
+                if (trueLabels[i] == targetLabel)
+                {
+                    if (predictedLabels[i] == targetLabel)
+                    {
+                        truePositives++;
+                    }
+                    else
+                    {
+                        falseNegatives++;
+                    }
+                }
+            }
+
+            return truePositives + falseNegatives == 0 ? 0 : (double)truePositives / (truePositives + falseNegatives);
+        }
     }
 
 

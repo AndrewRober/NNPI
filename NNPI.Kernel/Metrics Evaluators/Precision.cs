@@ -24,30 +24,54 @@
 
             for (int i = 0; i < trueLabels.Length; i++)
             {
-                if (trueLabels[i] == 1 && predictedLabels[i] == 1)
+                switch (trueLabels[i])
                 {
-                    truePositives++;
-                }
-                else if (trueLabels[i] == 0 && predictedLabels[i] == 1)
-                {
-                    falsePositives++;
-                }
-                else if (trueLabels[i] != 0 && trueLabels[i] != 1)
-                {
-                    throw new ArgumentException("The trueLabels array contains non-binary values.");
-                }
-                else if (predictedLabels[i] != 0 && predictedLabels[i] != 1)
-                {
-                    throw new ArgumentException("The predictedLabels array contains non-binary values.");
+                    case 1 when predictedLabels[i] == 1:
+                        truePositives++;
+                        break;
+                    case 0 when predictedLabels[i] == 1:
+                        falsePositives++;
+                        break;
+                    default:
+                        if (trueLabels[i] is not 0 and not 1)
+                            throw new ArgumentException("The trueLabels array contains non-binary values.");
+                        else if (predictedLabels[i] is not 0 and not 1)
+                            throw new ArgumentException("The predictedLabels array contains non-binary values.");
+
+                        break;
                 }
             }
 
-            if (truePositives + falsePositives == 0)
+            return truePositives + falsePositives == 0 ? 0 : (double)truePositives / (truePositives + falsePositives);
+        }
+
+        // Overload for multi-class classification
+        public double Compute(int[] trueLabels, int[] predictedLabels, int targetLabel)
+        {
+            if (trueLabels.Length != predictedLabels.Length)
             {
-                return 0;
+                throw new ArgumentException("The length of trueLabels and predictedLabels arrays must be the same.");
             }
 
-            return (double)truePositives / (truePositives + falsePositives);
+            int truePositives = 0;
+            int falsePositives = 0;
+
+            for (int i = 0; i < trueLabels.Length; i++)
+            {
+                if (predictedLabels[i] == targetLabel)
+                {
+                    if (trueLabels[i] == targetLabel)
+                    {
+                        truePositives++;
+                    }
+                    else
+                    {
+                        falsePositives++;
+                    }
+                }
+            }
+
+            return truePositives + falsePositives == 0 ? 0 : (double)truePositives / (truePositives + falsePositives);
         }
     }
 }
