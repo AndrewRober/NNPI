@@ -25,6 +25,4 @@
             return (double)correctCount / trueLabels.Length;
         }
     }
-
-
 }
