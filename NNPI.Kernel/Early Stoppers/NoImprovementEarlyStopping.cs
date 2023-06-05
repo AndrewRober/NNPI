@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NNPI.Kernel
+namespace NNPI.Kernel.EarlyStoppers
 {
     /// <summary>
-    /// EarlyStopping class for monitoring training progress and stopping the training process
+    /// NoImprovementEarlyStopping class for monitoring training progress and stopping the training process
     /// when the monitored metric stops improving for a specified number of consecutive epochs.
     /// </summary>
-    public class EarlyStopper
+    public class NoImprovementEarlyStopping
     {
         private int patience;
         private double minDelta;
@@ -18,11 +18,11 @@ namespace NNPI.Kernel
         private double bestMetric;
 
         /// <summary>
-        /// Initializes a new instance of the EarlyStopping class with the given parameters.
+        /// Initializes a new instance of the NoImprovementEarlyStopping class with the given parameters.
         /// </summary>
         /// <param name="patience">The number of consecutive epochs without improvement required to trigger early stopping.</param>
         /// <param name="minDelta">The minimum change in the monitored metric required to qualify as an improvement.</param>
-        public EarlyStopper(int patience, double minDelta = 0)
+        public NoImprovementEarlyStopping(int patience, double minDelta = 0)
         {
             this.patience = patience;
             this.minDelta = minDelta;
