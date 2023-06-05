@@ -1,10 +1,4 @@
-﻿using System.Numerics;
-
-using NNPI.Kernel.NNPIMath.Linear_Algebra;
-
-using Vector = NNPI.Kernel.NNPIMath.Linear_Algebra.Vector;
-
-namespace NNPI.Kernel.Data_PreProcessors
+﻿namespace NNPI.Kernel.Data_PreProcessors
 {
     /// <summary>
     /// Scales the input data by transforming it to a specified range.

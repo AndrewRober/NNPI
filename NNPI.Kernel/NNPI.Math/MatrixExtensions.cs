@@ -1,11 +1,5 @@
 ﻿using NNPI.Kernel.NNPIMath.Linear_Algebra;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace NNPI.Kernel.NNPI.Math
 {
     public static class MatrixExtensions

@@ -10,10 +10,7 @@
         /// <summary>
         /// Static constructor that initializes the LemmaDictionary by loading lemma/token pairs from the specified file.
         /// </summary>
-        static Lemmatizer()
-        {
-            LoadLemmatizationData("res/lemma/lemmatization-en.txt");
-        }
+        static Lemmatizer() => LoadLemmatizationData("res/lemma/lemmatization-en.txt");
 
         /// <summary>
         /// Loads lemmatization data from the specified file.
@@ -85,15 +82,11 @@
         private static string LemmatizeToken(string token)
         {
             if (string.IsNullOrEmpty(token))
-            {
                 return token;
-            }
 
             // Try to find the lemma for the token in the dictionary
             if (_lemmaDictionary.TryGetValue(token, out string lemma))
-            {
                 return lemma;
-            }
 
             // Return the original token if no lemma is found
             return token;
