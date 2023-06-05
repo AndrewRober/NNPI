@@ -1,5 +1,9 @@
 ﻿using System.Numerics;
 
+using NNPI.Kernel.NNPIMath.Linear_Algebra;
+
+using Vector = NNPI.Kernel.NNPIMath.Linear_Algebra.Vector;
+
 namespace NNPI.Kernel.Data_PreProcessors
 {
     /// <summary>
@@ -80,93 +84,5 @@ namespace NNPI.Kernel.Data_PreProcessors
 
             return scaledData;
         }
-    }
-
-
-/// <summary>
-/// Reduces the dimensionality of input data by projecting it onto the principal components.
-/// </summary>
-public class PCA
-    {
-        private readonly int _nComponents;
-        private Matrix<double> _projectionMatrix;
-
-        /// <summary>
-        /// Initializes a new instance of the PCA class with the specified number of components.
-        /// </summary>
-        /// <param name="nComponents">The number of components to keep. Must be positive.</param>
-        public PCA(int nComponents)
-        {
-            if (nComponents <= 0)
-            {
-                throw new ArgumentException("The number of components must be positive.", nameof(nComponents));
-            }
-
-            _nComponents = nComponents;
-        }
-
-        /// <summary>
-        /// Fits the PCA model to the input data.
-        /// </summary>
-        /// <param name="data">A 2D array of input data.</param>
-        public void Fit(double[][] data)
-        {
-            if (data == null || data.Length == 0)
-            {
-                throw new ArgumentException("Data must not be null or empty.", nameof(data));
-            }
-
-            int numRows = data.Length;
-            int numCols = data[0].Length;
-
-            if (_nComponents > numCols)
-            {
-                throw new ArgumentException("The number of components must be less than or equal to the number of columns in the data.", nameof(_nComponents));
-            }
-
-            Matrix<double> dataMatrix = DenseMatrix.OfArray(data);
-
-            // Center the data
-            Vector<double> columnMeans = dataMatrix.ColumnSums() / numRows;
-            dataMatrix = (dataMatrix - columnMeans.ToRowMatrix()).Divide(Math.Sqrt(numRows - 1));
-
-            // Compute the covariance matrix
-            Matrix<double> covarianceMatrix = dataMatrix.Transpose() * dataMatrix;
-
-            // Compute the eigenvalues and eigenvectors of the covariance matrix
-            var eigen = covarianceMatrix.Evd();
-
-            // Sort the eigenvectors by descending eigenvalues
-            var sortedIndices = eigen.EigenValues.Select((val, idx) => (val, idx)).OrderByDescending(x => x.val.Magnitude).Select(x => x.idx).ToArray();
-            Matrix<double> sortedEigenVectors = DenseMatrix.Create(numCols, numCols, (i, j) => eigen.EigenVectors[i, sortedIndices[j]]);
-
-            // Select the top n eigenvectors
-            _projectionMatrix = sortedEigenVectors.SubMatrix(0, numCols, 0, _nComponents);
-        }
-
-        /// <summary>
-        /// Transforms the input data by projecting it onto the principal components.
-        /// </summary>
-        /// <param name="data">A 2D array of input data.</param>
-        /// <returns>A 2D array of transformed input data.</returns>
-        public double[][] Transform(double[][] data)
-        {
-            if (data == null || data.Length == 0)
-            {
-                throw new ArgumentException("Data must not be null or empty.", nameof(data));
-            }
-
-            if (_projectionMatrix == null)
-            {
-                throw new InvalidOperationException("The PCA model must be fitted before transforming data.");
-            }
-
-            Matrix<double> dataMatrix = DenseMatrix.OfArray(data);
-            Matrix<double> transformedDataMatrix = dataMatrix * _projectionMatrix;
-
-            return transformedDataMatrix.ToRowArrays();
-        }
-
-
     }
 }
