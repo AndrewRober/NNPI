@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NNPI.Kernel
+namespace NNPI.Kernel.Loss
 {
     internal class LossFunctions
     {
@@ -61,7 +61,7 @@ namespace NNPI.Kernel
         /// <param name="targets">Actual values.</param>
         /// <param name="delta">The delta parameter for the Huber loss.</param>
         /// <returns>The Huber loss.</returns>
-        public static double HuberLoss(double[] predictions, double[] targets, double delta = 1.0) => 
+        public static double HuberLoss(double[] predictions, double[] targets, double delta = 1.0) =>
             predictions.Zip(targets, (p, t) =>
                 {
                     double diff = Math.Abs(p - t);
@@ -85,7 +85,7 @@ namespace NNPI.Kernel
         /// <param name="quantile">The quantile parameter (between 0 and 1).</param>
         /// <returns>The Quantile loss.</returns>
         public static double QuantileLoss(double[] predictions, double[] targets, double quantile = 0.5) =>
-            predictions.Zip(targets, (p, t) => 
+            predictions.Zip(targets, (p, t) =>
                                         t >= p ? quantile * (t - p) : (1 - quantile) * (p - t)).Average();
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace NNPI.Kernel
             double dotProduct = predictions.Zip(targets, (p, t) => p * t).Sum();
             double predNorm = Math.Sqrt(predictions.Sum(p => Math.Pow(p, 2)));
             double targetNorm = Math.Sqrt(targets.Sum(t => Math.Pow(t, 2)));
-            return 1 - (dotProduct / (predNorm * targetNorm));
+            return 1 - dotProduct / (predNorm * targetNorm);
         }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace NNPI.Kernel
         {
             double intersection = predictions.Zip(targets, (p, t) => p * t).Sum();
             double sum = predictions.Sum() + targets.Sum();
-            return 1 - (2 * intersection / sum);
+            return 1 - 2 * intersection / sum;
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace NNPI.Kernel
             double tp = predictions.Zip(targets, (p, t) => p * t).Sum();
             double fp = predictions.Zip(targets, (p, t) => (1 - t) * p).Sum();
             double fn = predictions.Zip(targets, (p, t) => t * (1 - p)).Sum();
-            return 1 - (tp / (tp + alpha * fp + beta * fn));
+            return 1 - tp / (tp + alpha * fp + beta * fn);
         }
 
         /// <summary>

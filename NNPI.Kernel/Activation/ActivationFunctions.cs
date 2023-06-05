@@ -1,4 +1,4 @@
-﻿namespace NNPI.Kernel
+﻿namespace NNPI.Kernel.Activation
 {
     /// <summary>
     /// A collection of common activation functions used in neural networks.
