@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NNPI.Kernel.EarlyStoppers
+﻿namespace NNPI.Kernel.EarlyStoppers
 {
     /// <summary>
     /// NoImprovementEarlyStopping class for monitoring training progress and stopping the training process

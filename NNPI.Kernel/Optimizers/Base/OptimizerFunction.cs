@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NNPI.Kernel.Optimizers.Base
+﻿namespace NNPI.Kernel.Optimizers.Base
 {
     public abstract class OptimizerFunction
     {

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NNPI.Kernel.Weigh_tInitializers
+﻿namespace NNPI.Kernel.Weigh_tInitializers
 {
     public abstract class WeightInitializer
     {

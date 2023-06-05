@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NNPI.Kernel.Metrics_Evaluators
+﻿namespace NNPI.Kernel.Metrics_Evaluators
 {
     /// <summary>
     /// Base class for evaluation metrics.

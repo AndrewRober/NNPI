@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NNPI.Kernel.Regularizers.Base
+﻿namespace NNPI.Kernel.Regularizers.Base
 {
     /// <summary>
     /// An abstract base class for implementing different types of regularizers.
